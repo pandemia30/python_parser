@@ -36,16 +36,16 @@ def parse(page: BeautifulSoup):
     key_string = ''
     for item in received_data:
         if item.name == 'h2':
-            shops.update({item.text: {'name': item.text, 'location': 'unknown', 'shops': []}})
+            shops.update({item.text: {'Name': item.text, 'Location': 'Unknown', 'Shops': []}})
             key_string = item.text
 
         elif key_string and item.name == 'p' and 'располож' in item.text:    
-            pattern = re.compile('расположен[\w]?\s', re.IGNORECASE)
-            shops[key_string]['location'] = re.split(pattern, item.text)[1]
+            pattern = re.compile('Расположен[\w]?\s', re.IGNORECASE)
+            shops[key_string]['Location'] = re.split(pattern, item.text)[1]
         
         elif key_string and item.name == 'a' and item.text:
             shop_url = connect_string + (item.attrs["href"] if item.attrs['href'][0] == '/' else f'/{item.attrs["href"]}')
-            shops[key_string]['shops'].append({'name': item.text, 'url': shop_url})
+            shops[key_string]['Shops'].append({'Name': item.text, 'Url': shop_url})
 
     return shops
 
