@@ -12,16 +12,13 @@ def write(data: dict):
     with open('data.json', 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False)
 
-
 def get_page(url: str):
     
     page = requests.get(url).text
     return BeautifulSoup(page, 'lxml')
 
-
 def parse(page: BeautifulSoup):
     shops = {}
-
     
     received_data = (page.find('div', class_='shadows_left')
             .find('div', class_='shadows_right')
